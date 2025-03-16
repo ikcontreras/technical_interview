@@ -12,4 +12,15 @@ public class Product {
     private BigDecimal price;
     private String description;
     private String category;
+
+    public Product(String sku, BigDecimal price, String description, String category) {
+        if (sku == null || sku.length() != 7) {
+            throw new IllegalArgumentException("SKU must be exactly 7 characters");
+        }
+
+        this.sku = sku;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+    }
 }
