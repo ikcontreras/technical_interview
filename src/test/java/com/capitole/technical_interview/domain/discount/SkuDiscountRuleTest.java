@@ -14,7 +14,7 @@ class SkuDiscountRuleTest {
     void shouldApply30PercentDiscountForSkuEndingIn5() {
         Product product = new Product("SKU0005", new BigDecimal("120.00"), "Noise-Cancelling Headphones", "Electronics");
         discountRule.applyDiscount(product);
-        assertEquals(new BigDecimal("84.00"), product.getPrice());
+        assertEquals(new BigDecimal("84.0000"), product.getPrice());
     }
 
     @Test
