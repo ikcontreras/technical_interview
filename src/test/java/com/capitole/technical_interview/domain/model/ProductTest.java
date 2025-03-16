@@ -18,4 +18,11 @@ class ProductTest {
                 new Product("SKU0001", new BigDecimal("-5.00"), "Wireless Mouse", "Electronics"));
         assertEquals("Price must be greater than 0", exception.getMessage());
     }
+
+    @Test
+    void shouldThrowExceptionForNullCategory() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                new Product("SKU0001", new BigDecimal("19.99"), "Wireless Mouse", null));
+        assertEquals("Category cannot be null or empty", exception.getMessage());
+    }
 }
