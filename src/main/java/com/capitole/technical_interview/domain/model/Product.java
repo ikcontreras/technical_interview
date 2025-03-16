@@ -17,6 +17,9 @@ public class Product {
         if (sku == null || sku.length() != 7) {
             throw new IllegalArgumentException("SKU must be exactly 7 characters");
         }
+        if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0");
+        }
 
         this.sku = sku;
         this.price = price;
