@@ -20,13 +20,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> getByCategory(String category) {
-        List<Product> products = productRepository.findAll();
+    public List<Product> getByCategory(List<Product> products, String category) {
         return filters.filterByCategory(products, category);
     }
 
-    public List<Product> findAllSorted(String sortBy, boolean ascending) {
-        List<Product> products = productRepository.findAll();
+    public List<Product> findAllSorted(List<Product> products,String sortBy, boolean ascending) {
         return sortProducts.sort(products, sortBy, ascending);
     }
 }

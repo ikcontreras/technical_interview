@@ -56,16 +56,14 @@ class ProductServiceTest {
         String category = "Electronics";
         List<Product> filteredProducts = Arrays.asList(mockProducts.get(0), mockProducts.get(1));
 
-        when(productRepository.findAll()).thenReturn(mockProducts);
         when(filters.filterByCategory(mockProducts, category)).thenReturn(filteredProducts);
 
-        List<Product> result = productService.getByCategory(category);
+        List<Product> result = productService.getByCategory(mockProducts, category);
 
         assertEquals(2, result.size());
         assertEquals("SKU0001", result.get(0).getSku());
         assertEquals("SKU0002", result.get(1).getSku());
 
-        verify(productRepository, times(1)).findAll();
         verify(filters, times(1)).filterByCategory(mockProducts, category);
     }
 
@@ -80,16 +78,14 @@ class ProductServiceTest {
                 mockProducts.get(1)
         );
 
-        when(productRepository.findAll()).thenReturn(mockProducts);
         when(sortProducts.sort(mockProducts, sortBy, ascending)).thenReturn(sortedProducts);
 
-        List<Product> result = productService.findAllSorted(sortBy, ascending);
+        List<Product> result = productService.findAllSorted(mockProducts, sortBy, ascending);
 
         assertEquals(4, result.size());
-        assertEquals("SKU0004", result.get(0).getSku()); // Más barato primero
-        assertEquals("SKU0002", result.get(3).getSku()); // Más caro último
+        assertEquals("SKU0004", result.get(0).getSku());
+        assertEquals("SKU0002", result.get(3).getSku());
 
-        verify(productRepository, times(1)).findAll();
         verify(sortProducts, times(1)).sort(mockProducts, sortBy, ascending);
     }
 }

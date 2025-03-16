@@ -5,10 +5,7 @@ import com.capitole.technical_interview.domain.model.Product;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -28,15 +25,12 @@ public class ProductController {
 
         List<Product> products = productService.getAllProducts();
 
-        if (category != null) {
-            category = java.net.URLDecoder.decode(category, StandardCharsets.UTF_8);
-            products = productService.getByCategory(category);
+        if (category != null && !category.isEmpty()) {
+            products = productService.getByCategory(products, category);
         }
 
-        if (sortBy != null) {
-            sortBy = java.net.URLDecoder.decode(sortBy, StandardCharsets.UTF_8);
-            products = productService.findAllSorted(sortBy, order.equalsIgnoreCase("desc"));
-        }
+        boolean isDescending = order.equalsIgnoreCase("asc");
+        products = productService.findAllSorted(products, sortBy, isDescending);
 
         return ResponseEntity.ok(products);
     }
