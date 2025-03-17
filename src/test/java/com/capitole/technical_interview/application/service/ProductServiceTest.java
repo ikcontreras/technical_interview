@@ -1,9 +1,11 @@
 package com.capitole.technical_interview.application.service;
 
 import com.capitole.technical_interview.application.port.ProductRepository;
+import com.capitole.technical_interview.domain.discount.DiscountRule;
 import com.capitole.technical_interview.domain.model.Product;
 import com.capitole.technical_interview.domain.service.Filters;
 import com.capitole.technical_interview.domain.service.SortProducts;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +30,12 @@ class ProductServiceTest {
     @Mock
     private SortProducts sortProducts;
 
+    @Mock
+    private DiscountRule discountRule1;
+
+    @Mock
+    private DiscountRule discountRule2;
+
     @InjectMocks
     private ProductService productService;
 
@@ -37,6 +45,11 @@ class ProductServiceTest {
             new Product("SKU0003", new BigDecimal("29.50"), "Stainless Steel Water Bottle, 1L", "Home & Kitchen"),
             new Product("SKU0004", new BigDecimal("15.00"), "Cotton T-Shirt, Unisex, Size M", "Clothing")
     );
+
+    @BeforeEach
+    void setUp() {
+        productService = new ProductService(productRepository, filters, sortProducts, List.of(discountRule1, discountRule2));
+    }
 
     @Test
     void testGetAllProducts() {
@@ -49,6 +62,8 @@ class ProductServiceTest {
         assertEquals(mockProducts.get(3).getSku(), result.get(3).getSku());
 
         verify(productRepository).findAll();
+        verify(discountRule1, times(mockProducts.size())).applyDiscount(any(Product.class));
+        verify(discountRule2, times(mockProducts.size())).applyDiscount(any(Product.class));
     }
 
     @Test

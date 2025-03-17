@@ -1,9 +1,11 @@
 package com.capitole.technical_interview.domain.discount;
 
 import com.capitole.technical_interview.domain.model.Product;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class SkuDiscountRule implements DiscountRule {
 
     private static final BigDecimal DISCOUNT = new BigDecimal("0.30");
