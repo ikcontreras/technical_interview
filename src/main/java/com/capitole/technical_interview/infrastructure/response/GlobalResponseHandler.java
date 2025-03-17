@@ -1,0 +1,38 @@
+package com.capitole.technical_interview.infrastructure.response;
+
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@ControllerAdvice
+public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
+
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        return true;
+    }
+
+    @Override
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+      Class<? extends HttpMessageConverter<?>> selectedConverterType,
+      ServerHttpRequest request, ServerHttpResponse response) {
+
+        return createResponseBody(body, HttpStatus.OK);
+    }
+
+    private Map<String, Object> createResponseBody(Object body, HttpStatus status) {
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("status", status.value());
+        responseBody.put("message", "Request processed successfully");
+        responseBody.put("data", body);
+        return responseBody;
+    }
+}
