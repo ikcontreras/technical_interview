@@ -9,9 +9,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ControllerAdvice
 public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
 
@@ -25,14 +22,10 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
       Class<? extends HttpMessageConverter<?>> selectedConverterType,
       ServerHttpRequest request, ServerHttpResponse response) {
 
-        return createResponseBody(body, HttpStatus.OK);
-    }
+        if (body instanceof ErrorResponse apiResponse) {
+            return apiResponse;
+        }
 
-    private Map<String, Object> createResponseBody(Object body, HttpStatus status) {
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("status", status.value());
-        responseBody.put("message", "Request processed successfully");
-        responseBody.put("data", body);
-        return responseBody;
+        return SuccessResponse.of(HttpStatus.OK, body);
     }
 }
