@@ -2,9 +2,9 @@ package com.capitole.technical_interview.application.service;
 
 import com.capitole.technical_interview.application.port.ProductRepository;
 import com.capitole.technical_interview.domain.discount.DiscountRule;
+import com.capitole.technical_interview.domain.filter.FilterService;
 import com.capitole.technical_interview.domain.model.Product;
-import com.capitole.technical_interview.domain.service.Filters;
-import com.capitole.technical_interview.domain.service.SortProducts;
+import com.capitole.technical_interview.domain.sort.SortService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final Filters filters;
-    private final SortProducts sortProducts;
+    private final FilterService<Product> filters;
+    private final SortService<Product> sortProducts;
     private final List<DiscountRule> discountRules;
 
     public List<Product> getAllProducts() {

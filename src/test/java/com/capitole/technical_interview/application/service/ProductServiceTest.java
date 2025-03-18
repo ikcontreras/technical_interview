@@ -3,8 +3,8 @@ package com.capitole.technical_interview.application.service;
 import com.capitole.technical_interview.application.port.ProductRepository;
 import com.capitole.technical_interview.domain.discount.DiscountRule;
 import com.capitole.technical_interview.domain.model.Product;
-import com.capitole.technical_interview.domain.service.Filters;
-import com.capitole.technical_interview.domain.service.SortProducts;
+import com.capitole.technical_interview.domain.filter.FilterProduct;
+import com.capitole.technical_interview.domain.sort.SortProduct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,10 +25,10 @@ class ProductServiceTest {
     private ProductRepository productRepository;
 
     @Mock
-    private Filters filters;
+    private FilterProduct filters;
 
     @Mock
-    private SortProducts sortProducts;
+    private SortProduct sortProducts;
 
     @Mock
     private DiscountRule discountRule1;
